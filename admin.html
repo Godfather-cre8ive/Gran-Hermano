@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="admin-login-page">
+  <div class="admin-login-card">
+    <img src="https://www.granhermano.sch.ng/img/logo.png" alt="GHA Logo">
+    <h2>Admin Portal</h2>
+    <p class="sub">Gran Hermano Academy · Content Management</p>
+
+    <form id="admin-login-form" autocomplete="off">
+      <div class="form-group">
+        <label for="admin-user">Username</label>
+        <input type="text" id="admin-user" placeholder="Enter admin username" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label for="admin-pass">Password</label>
+        <input type="password" id="admin-pass" placeholder="Enter password" autocomplete="current-password" required>
+      </div>
+      <p id="login-error" class="login-error"></p>
+      <button type="submit" class="btn btn--gold" style="width:100%;justify-content:center;margin-top:0.5rem">
+        🔐 Sign In
+      </button>
+    </form>
+
+    <p style="margin-top:1.5rem;font-size:0.78rem;color:var(--slate-light)">
+      Default credentials: <code style="background:var(--gold-pale);padding:0.1rem 0.3rem;border-radius:3px">admin</code> / <code style="background:var(--gold-pale);padding:0.1rem 0.3rem;border-radius:3px">gha@admin2025</code>
+    </p>
+    <p style="margin-top:1rem">
+      <a href="index.html" style="font-size:0.82rem;color:var(--slate-light)">← Back to Website</a>
+    </p>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/admin.js"></script>
+<script>
+  // Check if already logged in
+  if (sessionStorage.getItem('gha_admin') === 'true') {
+    window.location.href = 'admin-dashboard.html';
+  }
+</script>
+</body>
+</html>

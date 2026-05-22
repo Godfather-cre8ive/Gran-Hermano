@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dashboard-stats {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem; margin-bottom: 2rem;
+    }
+    .dash-stat {
+      background: var(--white); border-radius: var(--radius-lg);
+      padding: 1.5rem; text-align: center;
+      box-shadow: var(--shadow-sm); border: 1px solid rgba(201,168,76,0.15);
+    }
+    .dash-stat .ico { font-size: 2rem; margin-bottom: 0.5rem; }
+    .dash-stat .num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--navy); }
+    .dash-stat .lbl { font-size: 0.75rem; color: var(--slate-light); text-transform: uppercase; letter-spacing: 0.08em; }
+    .admin-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(6,14,26,0.8); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .admin-modal-overlay.open { display: flex; }
+    .admin-modal-box {
+      background: var(--white); border-radius: var(--radius-lg);
+      width: 100%; max-width: 580px; max-height: 90vh; overflow-y: auto;
+      padding: 2rem; position: relative;
+      animation: modal-in 0.3s ease;
+    }
+    .admin-modal-box h3 { font-size: 1.3rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .modal-close-btn {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--ivory); border: none; border-radius: 50%;
+      width: 32px; height: 32px; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+    .btn-cancel { padding: 0.65rem 1.5rem; background: var(--ivory); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+    body { background: #f0ede6; }
+  </style>
+</head>
+<body>
+
+<div class="admin-dashboard">
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <img src="https://www.granhermano.sch.ng/img/logo.png" alt="GHA">
+      <p>Admin Dashboard</p>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="#" data-page="dashboard" class="active"><span class="nav-ico">📊</span> Dashboard</a></li>
+        <li><a href="#" data-page="site"><span class="nav-ico">🏫</span> Site Settings</a></li>
+        <li><a href="#" data-page="hero"><span class="nav-ico">🖼</span> Hero Slides</a></li>
+        <li><a href="#" data-page="admission"><span class="nav-ico">📋</span> Admission</a></li>
+        <li><a href="#" data-page="jamb"><span class="nav-ico">🏅</span> JAMB Scorers</a></li>
+        <li><a href="#" data-page="sections"><span class="nav-ico">📚</span> School Sections</a></li>
+        <li><a href="#" data-page="about"><span class="nav-ico">ℹ️</span> About</a></li>
+        <li><a href="#" data-page="why"><span class="nav-ico">✅</span> Why Choose GHA</a></li>
+        <li><a href="#" data-page="facilities"><span class="nav-ico">🏗️</span> Facilities</a></li>
+        <li><a href="#" data-page="anthem"><span class="nav-ico">🎵</span> School Anthem</a></li>
+        <li><a href="#" data-page="vision"><span class="nav-ico">🎯</span> Vision &amp; Values</a></li>
+        <li><a href="#" data-page="news"><span class="nav-ico">📰</span> News &amp; Events</a></li>
+        <li><a href="#" data-page="security"><span class="nav-ico">🔐</span> Security</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="admin-logout" style="margin-bottom:0.5rem">← Back to Website</button>
+      <button class="admin-logout" onclick="sessionStorage.removeItem('gha_admin');window.location.href='admin.html'">🚪 Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+
+    <!-- DASHBOARD -->
+    <div class="admin-page active" id="page-dashboard">
+      <div class="admin-page-header">
+        <h1>Welcome Back, Admin 👋</h1>
+        <p>Gran Hermano Academy Content Management System</p>
+      </div>
+      <div class="dashboard-stats">
+        <div class="dash-stat"><div class="ico">🎓</div><div class="num" id="ds-scorers">0</div><div class="lbl">JAMB Scorers</div></div>
+        <div class="dash-stat"><div class="ico">🖼</div><div class="num" id="ds-slides">0</div><div class="lbl">Hero Slides</div></div>
+        <div class="dash-stat"><div class="ico">📰</div><div class="num" id="ds-news">0</div><div class="lbl">News Items</div></div>
+        <div class="dash-stat"><div class="ico">🏗️</div><div class="num" id="ds-facilities">0</div><div class="lbl">Facilities</div></div>
+        <div class="dash-stat"><div class="ico">✅</div><div class="num" id="ds-why">0</div><div class="lbl">Why Choose Items</div></div>
+      </div>
+      <div class="admin-card">
+        <h3>🚀 Quick Actions</h3>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <button class="save-btn" onclick="showAdminPage('news');document.querySelectorAll('.sidebar-nav a').forEach(l=>l.classList.remove('active'));document.querySelector('[data-page=news]').classList.add('active');editNews(-1)">+ Add News</button>
+          <button class="save-btn" onclick="showAdminPage('hero');document.querySelectorAll('.sidebar-nav a').forEach(l=>l.classList.remove('active'));document.querySelector('[data-page=hero]').classList.add('active');addSlide()">+ Add Hero Slide</button>
+          <button class="save-btn" onclick="showAdminPage('jamb');document.querySelectorAll('.sidebar-nav a').forEach(l=>l.classList.remove('active'));document.querySelector('[data-page=jamb]').classList.add('active');editScorer(-1)">+ Add JAMB Scorer</button>
+        </div>
+      </div>
+      <div class="admin-card">
+        <h3>📝 How to Use This Dashboard</h3>
+        <p style="margin-bottom:0.75rem;font-size:0.9rem">Use the sidebar navigation to edit any section of the GHA website. All changes are saved automatically to your browser's local storage.</p>
+        <ul style="font-size:0.875rem;color:var(--slate);line-height:2;padding-left:1.25rem">
+          <li><strong>Site Settings</strong> — Edit school name, contact info, address, social links</li>
+          <li><strong>Hero Slides</strong> — Add, edit or remove homepage slideshow images</li>
+          <li><strong>Admission</strong> — Update admission text, countdown date, exam dates</li>
+          <li><strong>JAMB Scorers</strong> — Manage top scorer profiles and scores</li>
+          <li><strong>School Sections</strong> — Edit Crèche, Nursery, Primary, Secondary content</li>
+          <li><strong>Facilities</strong> — Add/edit/remove facility cards</li>
+          <li><strong>News &amp; Events</strong> — Publish, edit or delete news articles</li>
+          <li><strong>Security</strong> — Change admin password</li>
+        </ul>
+        <p style="margin-top:1rem;font-size:0.82rem;color:var(--slate-light)">⚠ Changes are saved in browser localStorage. For production deployment, connect to a backend database.</p>
+      </div>
+    </div>
+
+    <!-- SITE SETTINGS -->
+    <div class="admin-page" id="page-site">
+      <div class="admin-page-header"><h1>🏫 Site Settings</h1><p>Manage core school information shown across the website.</p></div>
+      <div id="site-form"></div>
+    </div>
+
+    <!-- HERO -->
+    <div class="admin-page" id="page-hero">
+      <div class="admin-page-header"><h1>🖼 Hero Slides</h1><p>Manage the homepage slideshow images and text.</p></div>
+      <div class="admin-card">
+        <h3>Slideshow Images</h3>
+        <button class="btn-add" onclick="addSlide()">+ Add New Slide</button>
+        <div id="hero-slides-list"></div>
+      </div>
+    </div>
+
+    <!-- ADMISSION -->
+    <div class="admin-page" id="page-admission">
+      <div class="admin-page-header"><h1>📋 Admission Section</h1><p>Edit admission banner content, countdown and call-to-action.</p></div>
+      <div id="admission-form"></div>
+    </div>
+
+    <!-- JAMB -->
+    <div class="admin-page" id="page-jamb">
+      <div class="admin-page-header"><h1>🏅 JAMB Top Scorers</h1><p>Manage UTME top scorer profiles displayed on the homepage.</p></div>
+      <div id="jamb-meta-form"></div>
+      <div id="jamb-list"></div>
+    </div>
+
+    <!-- SCHOOL SECTIONS -->
+    <div class="admin-page" id="page-sections">
+      <div class="admin-page-header"><h1>📚 School Sections</h1><p>Edit content for Crèche, Nursery, Primary and Secondary sections.</p></div>
+      <div id="sections-form"></div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="admin-page" id="page-about">
+      <div class="admin-page-header"><h1>ℹ️ About Section</h1><p>Edit the About GHA section on the homepage.</p></div>
+      <div id="about-form"></div>
+    </div>
+
+    <!-- WHY CHOOSE -->
+    <div class="admin-page" id="page-why">
+      <div class="admin-page-header"><h1>✅ Why Choose GHA</h1><p>Manage the reasons to choose GHA section.</p></div>
+      <div id="why-form"></div>
+    </div>
+
+    <!-- FACILITIES -->
+    <div class="admin-page" id="page-facilities">
+      <div class="admin-page-header"><h1>🏗️ Facilities</h1><p>Manage school facilities cards.</p></div>
+      <div id="facilities-form"></div>
+    </div>
+
+    <!-- ANTHEM -->
+    <div class="admin-page" id="page-anthem">
+      <div class="admin-page-header"><h1>🎵 School Anthem</h1><p>Edit the school anthem text.</p></div>
+      <div id="anthem-form"></div>
+    </div>
+
+    <!-- VISION & VALUES -->
+    <div class="admin-page" id="page-vision">
+      <div class="admin-page-header"><h1>🎯 Vision &amp; Values</h1><p>Edit vision, mission and core values.</p></div>
+      <div id="vision-form"></div>
+    </div>
+
+    <!-- NEWS -->
+    <div class="admin-page" id="page-news">
+      <div class="admin-page-header"><h1>📰 News &amp; Events</h1><p>Publish and manage news articles and event announcements.</p></div>
+      <div id="news-form"></div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="admin-page" id="page-security">
+      <div class="admin-page-header"><h1>🔐 Security</h1><p>Change your admin password.</p></div>
+      <div class="admin-card">
+        <h3>Change Password</h3>
+        <div class="admin-field"><label>Current Password</label><input type="password" id="pw-current" placeholder="Current password"></div>
+        <div class="admin-field"><label>New Password</label><input type="password" id="pw-new" placeholder="New password (min 6 chars)"></div>
+        <div class="admin-field"><label>Confirm New Password</label><input type="password" id="pw-confirm" placeholder="Confirm new password"></div>
+        <button class="save-btn" onclick="savePasswordChange()">🔐 Change Password</button>
+      </div>
+      <div class="admin-card">
+        <h3>Session Info</h3>
+        <p style="font-size:0.875rem;margin-bottom:0.5rem">You are currently logged in as: <strong>admin</strong></p>
+        <p style="font-size:0.875rem;color:var(--slate-light)">Session expires when browser is closed.</p>
+        <button class="save-btn" style="margin-top:1rem;background:var(--navy)" onclick="sessionStorage.removeItem('gha_admin');window.location.href='admin.html'">🚪 Logout Now</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- SAVE TOAST -->
+<div id="save-toast" class="save-toast">✓ Changes saved successfully!</div>
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- Hero Slide Modal -->
+<div class="admin-modal-overlay" id="slide-modal">
+  <div class="admin-modal-box">
+    <button class="modal-close-btn" onclick="closeSlideModal()">✕</button>
+    <h3>Hero Slide</h3>
+    <input type="hidden" id="slide-idx">
+    <div class="admin-field"><label>Image URL</label><input id="slide-img" placeholder="https://...image.jpg"></div>
+    <div class="admin-field"><label>Headline</label><input id="slide-headline" placeholder="Slide headline text"></div>
+    <div class="admin-field"><label>Sub-text</label><input id="slide-sub" placeholder="Short descriptive line"></div>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="saveSlideModal()">💾 Save Slide</button>
+      <button class="btn-cancel" onclick="closeSlideModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- JAMB Scorer Modal -->
+<div class="admin-modal-overlay" id="scorer-modal">
+  <div class="admin-modal-box">
+    <button class="modal-close-btn" onclick="closeModal2('scorer-modal')">✕</button>
+    <h3>JAMB Scorer</h3>
+    <input type="hidden" id="sc-idx">
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Full Name</label><input id="sc-name" placeholder="Student full name"></div>
+      <div class="admin-field"><label>Year/Class</label><input id="sc-year" value="Year 12"></div>
+    </div>
+    <div class="admin-field"><label>Photo URL</label><input id="sc-img" placeholder="https://...photo.jpg"></div>
+    <div class="admin-field"><label>Total Score</label><input id="sc-total" type="number" min="0" max="400"></div>
+    <h4 style="font-size:0.95rem;margin:1rem 0 0.75rem">Subject Scores (4 subjects)</h4>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Subject 1</label><input id="sc-s0" value="ENG"></div>
+      <div class="admin-field"><label>Score 1</label><input id="sc-v0" type="number"></div>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Subject 2</label><input id="sc-s1" value="BIO"></div>
+      <div class="admin-field"><label>Score 2</label><input id="sc-v1" type="number"></div>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Subject 3</label><input id="sc-s2" value="PHY"></div>
+      <div class="admin-field"><label>Score 3</label><input id="sc-v2" type="number"></div>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Subject 4</label><input id="sc-s3" value="CHEM"></div>
+      <div class="admin-field"><label>Score 4</label><input id="sc-v3" type="number"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="saveScorer()">💾 Save Scorer</button>
+      <button class="btn-cancel" onclick="closeModal2('scorer-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Why Choose Item Modal -->
+<div class="admin-modal-overlay" id="why-modal">
+  <div class="admin-modal-box">
+    <button class="modal-close-btn" onclick="closeModal2('why-modal')">✕</button>
+    <h3>Why Choose Item</h3>
+    <input type="hidden" id="wi-idx">
+    <div class="admin-field"><label>Title</label><input id="wi-title" placeholder="Feature title"></div>
+    <div class="admin-field"><label>Image URL</label><input id="wi-img" placeholder="https://...image.jpg"></div>
+    <div class="admin-field"><label>Description</label><textarea id="wi-desc" rows="4" placeholder="Describe this feature..."></textarea></div>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="saveWhyItem()">💾 Save Item</button>
+      <button class="btn-cancel" onclick="closeModal2('why-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Facility Modal -->
+<div class="admin-modal-overlay" id="facility-modal">
+  <div class="admin-modal-box">
+    <button class="modal-close-btn" onclick="closeModal2('facility-modal')">✕</button>
+    <h3>Facility</h3>
+    <input type="hidden" id="fac-idx">
+    <div class="admin-field"><label>Facility Name</label><input id="fac-title" placeholder="e.g. Chemistry Lab"></div>
+    <div class="admin-field"><label>Image URL</label><input id="fac-img" placeholder="https://...image.jpg"></div>
+    <div class="admin-field"><label>Description</label><textarea id="fac-desc" rows="4" placeholder="Describe this facility..."></textarea></div>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="saveFacility()">💾 Save Facility</button>
+      <button class="btn-cancel" onclick="closeModal2('facility-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Core Value Modal -->
+<div class="admin-modal-overlay" id="value-modal">
+  <div class="admin-modal-box">
+    <button class="modal-close-btn" onclick="closeModal2('value-modal')">✕</button>
+    <h3>Core Value</h3>
+    <input type="hidden" id="val-idx">
+    <div class="admin-field"><label>Value Name</label><input id="val-name" placeholder="e.g. Excellence"></div>
+    <div class="admin-field"><label>Description</label><textarea id="val-desc" rows="4" placeholder="Describe this value..."></textarea></div>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="saveValue()">💾 Save Value</button>
+      <button class="btn-cancel" onclick="closeModal2('value-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- News Modal -->
+<div class="admin-modal-overlay" id="news-modal">
+  <div class="admin-modal-box">
+    <button class="modal-close-btn" onclick="closeModal2('news-modal')">✕</button>
+    <h3>News / Event</h3>
+    <input type="hidden" id="nw-idx">
+    <div class="admin-field"><label>Title</label><input id="nw-title" placeholder="Article title"></div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Date</label><input id="nw-date" placeholder="e.g. 1st December, 2025"></div>
+      <div class="admin-field"><label>Category</label>
+        <select id="nw-cat">
+          <option>Events</option><option>Academics</option><option>Sports</option><option>Achievements</option><option>General</option><option>Admission</option>
+        </select>
+      </div>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Author</label><input id="nw-author" value="GHA ICT"></div>
+      <div class="admin-field"><label>Image URL</label><input id="nw-img" placeholder="https://...image.jpg"></div>
+    </div>
+    <div class="admin-field"><label>Excerpt (short preview)</label><textarea id="nw-excerpt" rows="2" placeholder="Brief summary..."></textarea></div>
+    <div class="admin-field"><label>Full Content</label><textarea id="nw-content" rows="6" placeholder="Full article content..."></textarea></div>
+    <div class="modal-actions">
+      <button class="save-btn" onclick="saveNews()">💾 Publish</button>
+      <button class="btn-cancel" onclick="closeModal2('news-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Click outside modals to close -->
+<script>
+  document.querySelectorAll('.admin-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.style.display = 'none';
+    });
+  });
+</script>
+
+<script src="js/data.js"></script>
+<script src="js/admin.js"></script>
+<script>
+  // Update dashboard stats
+  function updateDashStats() {
+    document.getElementById('ds-scorers').textContent = GHA_DATA.jamb.scorers.length;
+    document.getElementById('ds-slides').textContent = GHA_DATA.hero.slides.length;
+    document.getElementById('ds-news').textContent = GHA_DATA.news.length;
+    document.getElementById('ds-facilities').textContent = GHA_DATA.facilities.length;
+    document.getElementById('ds-why').textContent = GHA_DATA.whyChoose.items.length;
+  }
+
+  // Back to website button
+  document.querySelector('.admin-sidebar .sidebar-footer button:first-child').addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+
+  initDashboard();
+  updateDashStats();
+</script>
+</body>
+</html>
