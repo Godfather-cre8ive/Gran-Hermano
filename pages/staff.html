@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Staff — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+<div class="topbar" id="topbar"></div>
+<nav id="main-navbar"></nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Meet Our Staff</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="about.html">About GHA</a><span>›</span><span>Our Staff</span></div>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem">
+      <span class="section-label">Our Team</span>
+      <h2 class="section-title">Experienced, Dedicated Professionals</h2>
+      <div class="gold-line gold-line--center"></div>
+      <p style="max-width:600px;margin:0 auto">Every staff member at Gran Hermano Academy comes with an excellent track record and challenges our students to be the very best they can be.</p>
+    </div>
+
+    <!-- Management section -->
+    <h3 style="font-size:1.6rem;margin-bottom:1.5rem">Leadership &amp; Management</h3>
+    <div class="staff-grid">
+      <div class="staff-card">
+        <img src="https://www.granhermano.sch.ng/img/ubg2.jpg" alt="Chairman">
+        <div class="body"><h4>The Chairman</h4><div class="role">Chairman, Board of Governors</div></div>
+      </div>
+      <div class="staff-card">
+        <img src="https://www.granhermano.sch.ng/img/m2.jpg" alt="Director of Studies">
+        <div class="body"><h4>Director of Studies</h4><div class="role">Director of Studies</div></div>
+      </div>
+      <div class="staff-card">
+        <img src="https://www.granhermano.sch.ng/img/m1.jpg" alt="Principal">
+        <div class="body"><h4>The Principal</h4><div class="role">Principal</div></div>
+      </div>
+      <div class="staff-card">
+        <img src="https://www.granhermano.sch.ng/img/nm289.jpg" alt="Headmistress">
+        <div class="body"><h4>Headmistress</h4><div class="role">Headmistress, Primary Section</div></div>
+      </div>
+    </div>
+
+    <!-- Teaching staff -->
+    <h3 style="font-size:1.6rem;margin:3rem 0 1.5rem">Teaching Staff</h3>
+    <div class="staff-grid" id="teaching-grid">
+      <!-- Populated from gallery images as placeholders -->
+    </div>
+
+    <!-- Support staff -->
+    <h3 style="font-size:1.6rem;margin:3rem 0 1.5rem">Administrative &amp; Support Staff</h3>
+    <div class="staff-grid" id="support-grid"></div>
+
+    <div class="info-box" style="margin-top:3rem;text-align:center">
+      <h4>Join Our Team</h4>
+      <p style="margin-bottom:1rem">We are always looking for talented, passionate educators to join our team. Send your CV to <strong>info@granhermano.sch.ng</strong></p>
+      <a href="mailto:info@granhermano.sch.ng" class="btn btn--gold">Send Your CV</a>
+    </div>
+  </div>
+</section>
+
+<footer id="main-footer"></footer>
+<button class="back-top" id="back-top">↑</button>
+<script src="../js/data.js"></script><script src="../js/layout.js"></script>
+<script>
+const teachingStaff = [
+  { name:'English Department', role:'English Language & Literature', img:'https://www.granhermano.sch.ng/img/r8.jpg' },
+  { name:'Mathematics Department', role:'Mathematics & Further Maths', img:'https://www.granhermano.sch.ng/img/r1.jpg' },
+  { name:'Sciences Department', role:'Biology, Chemistry & Physics', img:'https://www.granhermano.sch.ng/img/f5.jpg' },
+  { name:'Social Sciences', role:'Economics, Government & CRS', img:'https://www.granhermano.sch.ng/img/nm303.jpg' },
+  { name:'ICT Department', role:'Computer Science & ICT', img:'https://www.granhermano.sch.ng/img/f3.jpg' },
+  { name:'Arts Department', role:'Fine Art, Music & Drama', img:'https://www.granhermano.sch.ng/img/r5.jpg' },
+  { name:'Sports Department', role:'Physical Education & Sports', img:'https://www.granhermano.sch.ng/img/r6.jpg' },
+  { name:'Primary Faculty', role:'Class Teachers – Primary 1–6', img:'https://www.granhermano.sch.ng/img/nm255.jpg' },
+];
+const supportStaff = [
+  { name:'Admissions Office', role:'Admissions Officer', img:'https://www.granhermano.sch.ng/img/bg2.jpg' },
+  { name:'Finance Office', role:'Bursary & Accounts', img:'https://www.granhermano.sch.ng/img/bg3.jpg' },
+  { name:'Medical Unit', role:'School Nurse', img:'https://www.granhermano.sch.ng/img/bg4.jpg' },
+  { name:'Security Unit', role:'Head of Security', img:'https://www.granhermano.sch.ng/img/r4.jpg' },
+];
+
+function renderCards(arr, id) {
+  document.getElementById(id).innerHTML = arr.map(s => `
+    <div class="staff-card">
+      <img src="${s.img}" alt="${s.name}" loading="lazy">
+      <div class="body"><h4>${s.name}</h4><div class="role">${s.role}</div></div>
+    </div>`).join('');
+}
+renderCards(teachingStaff, 'teaching-grid');
+renderCards(supportStaff, 'support-grid');
+</script>
+</body>
+</html>

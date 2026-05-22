@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/pages.css">
+  <style>
+    .lightbox-overlay { display:none;position:fixed;inset:0;z-index:2000;background:rgba(6,14,26,0.95);align-items:center;justify-content:center;padding:1rem }
+    .lightbox-overlay.open { display:flex }
+    .lightbox-img { max-width:90vw;max-height:85vh;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg) }
+    .lb-close { position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.1);border:none;color:var(--white);width:44px;height:44px;border-radius:50%;font-size:1.25rem;cursor:pointer;display:flex;align-items:center;justify-content:center }
+    .lb-prev,.lb-next { position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:var(--white);width:48px;height:48px;border-radius:50%;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background var(--transition) }
+    .lb-prev { left:1.5rem } .lb-next { right:1.5rem }
+    .lb-prev:hover,.lb-next:hover { background:var(--gold);color:var(--navy) }
+    .gallery-filter { display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2rem }
+    .filter-btn { padding:0.5rem 1.25rem;border-radius:20px;border:1.5px solid var(--border);background:var(--white);color:var(--slate);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all var(--transition) }
+    .filter-btn.active,.filter-btn:hover { background:var(--gold);border-color:var(--gold);color:var(--navy) }
+  </style>
+</head>
+<body>
+<div class="topbar" id="topbar"></div>
+<nav id="main-navbar"></nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Photo Gallery</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>›</span><span>Gallery</span></div>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <span class="section-label">Our Memories</span>
+      <h2 class="section-title">Life at Gran Hermano Academy</h2>
+      <div class="gold-line gold-line--center"></div>
+    </div>
+
+    <div class="gallery-filter">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="campus">Campus</button>
+      <button class="filter-btn" data-cat="students">Students</button>
+      <button class="filter-btn" data-cat="events">Events</button>
+      <button class="filter-btn" data-cat="sports">Sports</button>
+      <button class="filter-btn" data-cat="labs">Laboratories</button>
+    </div>
+
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lb-close" id="lb-close">✕</button>
+  <button class="lb-prev" id="lb-prev">◀</button>
+  <img class="lightbox-img" id="lb-img" src="" alt="">
+  <button class="lb-next" id="lb-next">▶</button>
+</div>
+
+<footer id="main-footer"></footer>
+<button class="back-top" id="back-top">↑</button>
+<script src="../js/data.js"></script><script src="../js/layout.js"></script>
+<script>
+const galleryImages = [
+  { src:'https://www.granhermano.sch.ng/img/bg1.jpg', cat:'campus', title:'School Grounds' },
+  { src:'https://www.granhermano.sch.ng/img/bg2.jpg', cat:'campus', title:'Learning Environment' },
+  { src:'https://www.granhermano.sch.ng/img/bg3.jpg', cat:'campus', title:'Campus Safety' },
+  { src:'https://www.granhermano.sch.ng/img/bg4.jpg', cat:'students', title:'Quality Education' },
+  { src:'https://www.granhermano.sch.ng/img/bg5.jpg', cat:'students', title:'Student Life' },
+  { src:'https://www.granhermano.sch.ng/img/bg6.jpg', cat:'students', title:'Crèche Section' },
+  { src:'https://www.granhermano.sch.ng/img/bg7.jpg', cat:'students', title:'Skills Development' },
+  { src:'https://www.granhermano.sch.ng/img/nm23.jpg', cat:'students', title:'Crèche' },
+  { src:'https://www.granhermano.sch.ng/img/nm24.jpg', cat:'students', title:'Nursery' },
+  { src:'https://www.granhermano.sch.ng/img/nm255.jpg', cat:'students', title:'Primary Section' },
+  { src:'https://www.granhermano.sch.ng/img/nm266.jpg', cat:'students', title:'Secondary Section' },
+  { src:'https://www.granhermano.sch.ng/img/f1.jpg', cat:'campus', title:'Library' },
+  { src:'https://www.granhermano.sch.ng/img/f2.jpg', cat:'campus', title:'Playground' },
+  { src:'https://www.granhermano.sch.ng/img/f3.jpg', cat:'labs', title:'ICT Laboratory' },
+  { src:'https://www.granhermano.sch.ng/img/f4.jpg', cat:'campus', title:'Classrooms' },
+  { src:'https://www.granhermano.sch.ng/img/f5.jpg', cat:'labs', title:'Biology Lab' },
+  { src:'https://www.granhermano.sch.ng/img/f6.jpg', cat:'labs', title:'Chemistry Lab' },
+  { src:'https://www.granhermano.sch.ng/img/f7.jpg', cat:'labs', title:'Physics Lab' },
+  { src:'https://www.granhermano.sch.ng/img/r1.jpg', cat:'students', title:'Discovery Learning' },
+  { src:'https://www.granhermano.sch.ng/img/r4.jpg', cat:'campus', title:'Safe Environment' },
+  { src:'https://www.granhermano.sch.ng/img/r5.jpg', cat:'campus', title:'Library Study' },
+  { src:'https://www.granhermano.sch.ng/img/r6.jpg', cat:'sports', title:'Sports Centre' },
+  { src:'https://www.granhermano.sch.ng/img/r7.jpg', cat:'campus', title:'School Buses' },
+  { src:'https://www.granhermano.sch.ng/img/r8.jpg', cat:'students', title:'Skilled Teachers' },
+  { src:'https://www.granhermano.sch.ng/img/nc1.jpg', cat:'campus', title:'Air-Conditioned Class' },
+  { src:'https://www.granhermano.sch.ng/img/nm289.jpg', cat:'students', title:'GHA Students' },
+  { src:'https://www.granhermano.sch.ng/img/nm303.jpg', cat:'students', title:'Intellectual Excellence' },
+  { src:'https://www.granhermano.sch.ng/img/bg10.jpg', cat:'events', title:'School Events' },
+  { src:'https://www.granhermano.sch.ng/img/bg49.jpg', cat:'campus', title:'Cambridge Certified' },
+  { src:'https://www.granhermano.sch.ng/img/ubg2.jpg', cat:'campus', title:'School Building' },
+];
+
+let current = 0;
+let filtered = [...galleryImages];
+
+function renderGallery(cat) {
+  filtered = cat === 'all' ? [...galleryImages] : galleryImages.filter(i => i.cat === cat);
+  const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = filtered.map((img, i) => `
+    <div class="gallery-item" data-idx="${i}" onclick="openLightbox(${i})">
+      <img src="${img.src}" alt="${img.title}" loading="lazy">
+      <div class="overlay">🔍</div>
+    </div>`).join('');
+}
+
+function openLightbox(i) {
+  current = i;
+  document.getElementById('lb-img').src = filtered[i].src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lb-close').onclick = closeLightbox;
+document.getElementById('lb-prev').onclick = () => { current = (current - 1 + filtered.length) % filtered.length; document.getElementById('lb-img').src = filtered[current].src; };
+document.getElementById('lb-next').onclick = () => { current = (current + 1) % filtered.length; document.getElementById('lb-img').src = filtered[current].src; };
+document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) closeLightbox(); });
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGallery(btn.dataset.cat);
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+  if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
+});
+
+renderGallery('all');
+</script>
+</body>
+</html>

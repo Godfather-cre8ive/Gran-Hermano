@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+<div class="topbar" id="topbar"></div>
+<nav id="main-navbar"></nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>About Gran Hermano Academy</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>›</span><span>About Us</span></div>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="container">
+    <div class="two-col two-col--wide">
+      <div>
+        <span class="section-label">Who We Are</span>
+        <h2 class="section-title">Briefly Know About Us</h2>
+        <div class="gold-line"></div>
+        <p style="margin-bottom:1.25rem;font-size:1.05rem;line-height:1.85">
+          Gran Hermano Academy is a co-educational boarding institution, consisting of nursery, primary and senior secondary school children between the ages of 2–16 years.
+        </p>
+        <p style="margin-bottom:1.25rem;line-height:1.85">
+          It was founded to provide a balanced, comprehensive educational curriculum for the full development of children intellectually, spiritually and socially. Our students, together with our experienced, professional and highly skilled staff, form a vibrant community dedicated to securing outstanding achievement for all.
+        </p>
+        <p style="margin-bottom:1.25rem;line-height:1.85">
+          From the onset, students are made to feel welcomed and comfortable with their teachers. The students' hostels could best be described as "a home away from home." They thrive in a truly friendly environment.
+        </p>
+        <p style="line-height:1.85">
+          Our students' academic records speak volumes and have established our academy as one of the very best in Nigeria.
+        </p>
+        <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap">
+          <a href="management.html" class="btn btn--navy">Meet Management</a>
+          <a href="staff.html" class="btn btn--outline">Meet Our Staff</a>
+        </div>
+      </div>
+      <div>
+        <img src="https://www.granhermano.sch.ng/img/ab1.jpg" alt="GHA Campus" style="width:100%;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem">
+          <div class="stat-box"><div class="num">20+</div><div class="lbl">Years of Excellence</div></div>
+          <div class="stat-box"><div class="num">2000+</div><div class="lbl">Graduates</div></div>
+          <div class="stat-box"><div class="num">100+</div><div class="lbl">Expert Staff</div></div>
+          <div class="stat-box"><div class="num">Cambridge</div><div class="lbl">Certified</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Facilities -->
+    <div style="margin-top:5rem">
+      <span class="section-label">Infrastructure</span>
+      <h2 class="section-title">Our Facilities</h2>
+      <div class="gold-line"></div>
+      <div class="facilities-grid" id="facilities-grid-about"></div>
+    </div>
+
+    <!-- Anthem -->
+    <div style="margin-top:5rem;text-align:center">
+      <span class="section-label">Our Pride</span>
+      <h2 class="section-title">School Anthem</h2>
+      <div class="gold-line gold-line--center"></div>
+      <div class="anthem-inner" style="max-width:700px;margin:2rem auto 0">
+        <div class="anthem-verse"><pre id="anthem-v1" style="font-family:var(--font-body);white-space:pre-line;line-height:2;color:rgba(255,255,255,0.85)"></pre></div>
+        <div class="anthem-verse"><pre id="anthem-v2" style="font-family:var(--font-body);white-space:pre-line;line-height:2;color:rgba(255,255,255,0.85)"></pre></div>
+      </div>
+    </div>
+
+    <!-- Vision / Mission -->
+    <div style="margin-top:5rem">
+      <div class="two-col">
+        <div style="background:var(--navy);border-radius:var(--radius-lg);padding:2.5rem;color:var(--white)">
+          <span class="section-label">Our Purpose</span>
+          <h3 style="color:var(--white);margin-bottom:1rem">Our Vision</h3>
+          <div class="gold-line"></div>
+          <img src="https://www.granhermano.sch.ng/img/m2.jpg" alt="Vision" style="width:100%;border-radius:var(--radius-md);margin-bottom:1rem">
+          <p id="vision-text" style="color:rgba(255,255,255,0.8);line-height:1.8"></p>
+        </div>
+        <div style="background:var(--gold-pale);border-radius:var(--radius-lg);padding:2.5rem">
+          <span class="section-label">Our Purpose</span>
+          <h3 style="margin-bottom:1rem">Our Mission</h3>
+          <div class="gold-line"></div>
+          <img src="https://www.granhermano.sch.ng/img/m1.jpg" alt="Mission" style="width:100%;border-radius:var(--radius-md);margin-bottom:1rem">
+          <p id="mission-text" style="line-height:1.8"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="join-section">
+  <div class="container">
+    <h2>Would You Like Your Children to Join Us?</h2>
+    <p>Admissions are open to pupils in crèche, nursery, primary and secondary. We also offer after-school care and Weekend Classes.</p>
+    <a href="apply.html" class="btn btn--gold">Apply for Admission</a>
+  </div>
+</section>
+
+<footer id="main-footer"></footer>
+<button class="back-top" id="back-top">↑</button>
+
+<script src="../js/data.js"></script>
+<script src="../js/layout.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Facilities
+  const fg = document.getElementById('facilities-grid-about');
+  if (fg) fg.innerHTML = GHA_DATA.facilities.map(f => `
+    <div class="facility-card">
+      <img class="facility-img" src="${f.image}" alt="${f.title}" loading="lazy">
+      <div class="facility-body"><h4>${f.title}</h4><p>${f.description}</p></div>
+    </div>`).join('');
+  // Anthem
+  const v1 = document.getElementById('anthem-v1'); if(v1) v1.textContent = GHA_DATA.anthem.verse1;
+  const v2 = document.getElementById('anthem-v2'); if(v2) v2.textContent = GHA_DATA.anthem.verse2;
+  // Vision
+  const vt = document.getElementById('vision-text'); if(vt) vt.textContent = GHA_DATA.vision.text;
+  const mt = document.getElementById('mission-text'); if(mt) mt.textContent = GHA_DATA.vision.mission;
+});
+</script>
+</body>
+</html>

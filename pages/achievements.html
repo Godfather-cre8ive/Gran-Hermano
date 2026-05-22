@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Achievements — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+<div class="topbar" id="topbar"></div>
+<nav id="main-navbar"></nav>
+<section class="page-hero">
+  <div class="container">
+    <h1>Our Achievements</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>›</span><span>Achievements</span></div>
+  </div>
+</section>
+<section class="page-content">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem">
+      <span class="section-label">Excellence</span>
+      <h2 class="section-title">Awards &amp; Achievements</h2>
+      <div class="gold-line gold-line--center"></div>
+      <p style="max-width:600px;margin:0 auto">Our students and staff have earned numerous recognitions that reflect the high standards of Gran Hermano Academy.</p>
+    </div>
+    <div id="jamb-achievements" style="margin-bottom:4rem"></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem">
+      <div style="background:var(--navy);border-radius:var(--radius-lg);padding:2rem;text-align:center;color:var(--white)">
+        <div style="font-size:3rem;margin-bottom:0.75rem">🏆</div>
+        <h4 style="color:var(--gold-light);font-size:1.2rem;margin-bottom:0.5rem">Academic Excellence</h4>
+        <p style="color:rgba(255,255,255,0.75);font-size:0.9rem">Consistently outstanding WAEC and NECO results with numerous distinctions across all subjects.</p>
+      </div>
+      <div style="background:var(--navy);border-radius:var(--radius-lg);padding:2rem;text-align:center;color:var(--white)">
+        <div style="font-size:3rem;margin-bottom:0.75rem">🎓</div>
+        <h4 style="color:var(--gold-light);font-size:1.2rem;margin-bottom:0.5rem">University Admissions</h4>
+        <p style="color:rgba(255,255,255,0.75);font-size:0.9rem">Our graduates have gained admission to top universities in Nigeria and abroad including UI, UNILAG, ABU and international institutions.</p>
+      </div>
+      <div style="background:var(--navy);border-radius:var(--radius-lg);padding:2rem;text-align:center;color:var(--white)">
+        <div style="font-size:3rem;margin-bottom:0.75rem">🌍</div>
+        <h4 style="color:var(--gold-light);font-size:1.2rem;margin-bottom:0.5rem">Cambridge Certification</h4>
+        <p style="color:rgba(255,255,255,0.75);font-size:0.9rem">Fully accredited Cambridge International School, with students earning internationally recognised qualifications.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="join-section">
+  <div class="container">
+    <h2>Would You Like to Know More?</h2>
+    <p>Contact us today or apply for admission online.</p>
+    <a href="apply.html" class="btn btn--gold">Apply for Admission</a>
+  </div>
+</section>
+<footer id="main-footer"></footer>
+<button class="back-top" id="back-top">↑</button>
+<script src="../js/data.js"></script><script src="../js/layout.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("jamb-achievements");
+  if (!el) return;
+  const {year, title, scorers} = GHA_DATA.jamb;
+  el.innerHTML = `<span class="section-label">${year} Exam Excellence</span><h3 style="font-size:1.6rem;margin-bottom:1.25rem">${year} ${title}</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem">${scorers.map((s,i)=>`<div style="background:var(--white);border-radius:var(--radius-lg);padding:1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:var(--shadow-sm);border:1px solid var(--border)"><img src="${s.image}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--gold-light)" onerror="this.src='https://via.placeholder.com/60'"><div><strong style="display:block;font-size:.9rem">${s.name}</strong><span style="font-size:.75rem;color:var(--slate-light)">${s.year}</span><div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--gold)">${s.total}<span style="font-size:.7rem;font-weight:400;color:var(--slate-light);font-family:var(--font-body)">/400</span></div></div></div>`).join("")}</div>`;
+});
+</script>
+</body>
+</html><script>
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('jamb-achievements');
+  if (!el) return;
+  const {year, title, scorers} = GHA_DATA.jamb;
+  el.innerHTML = `<span class="section-label">${year} JAMB Excellence</span>
+    <h3 style="font-size:1.6rem;margin:0.5rem 0 1.5rem">${year} ${title}</h3>
+    <div class="jamb-grid">${scorers.map((s,i)=>{
+      const medals=['🥇','🥈','🥉'];
+      return `<div class="scorer-card">
+        <div class="scorer-rank">${medals[i]||'#'+(i+1)}</div>
+        <img class="scorer-img" src="${s.image}" alt="${s.name}" onerror="this.src='https://via.placeholder.com/72?text=GHA'">
+        <div class="scorer-info">
+          <h4>${s.name}</h4><div class="year">${s.year}</div>
+          <div class="scorer-scores">${s.scores.map(sc=>`<span class="score-pill">${sc.subj}: ${sc.val}</span>`).join('')}</div>
+          <div class="scorer-total">${s.total} <span>/ 400</span></div>
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+});
+</script>

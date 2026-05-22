@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admission Requirements — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+<div class="topbar" id="topbar"></div>
+<nav id="main-navbar"></nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Admission Procedure &amp; Requirements</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>›</span><span>Admission Requirements</span></div>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="container">
+    <div class="two-col two-col--wide">
+      <div>
+        <span class="section-label">How to Apply</span>
+        <h2 class="section-title">Admission Process</h2>
+        <div class="gold-line"></div>
+
+        <div style="display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem">
+          <div style="display:flex;gap:1.25rem;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-display);font-size:1.2rem;flex-shrink:0">1</div>
+            <div><h4>Obtain Application Form</h4><p>Visit our admissions office or complete the online application form on our website. A non-refundable form fee applies.</p></div>
+          </div>
+          <div style="display:flex;gap:1.25rem;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-display);font-size:1.2rem;flex-shrink:0">2</div>
+            <div><h4>Sit for Entrance Examination</h4><p>All prospective students (except crèche and nursery) must sit for our entrance examination. Exam dates are published on our website.</p></div>
+          </div>
+          <div style="display:flex;gap:1.25rem;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-display);font-size:1.2rem;flex-shrink:0">3</div>
+            <div><h4>Interview</h4><p>Successful applicants will be invited for an interview with parents/guardians and the school's admissions panel.</p></div>
+          </div>
+          <div style="display:flex;gap:1.25rem;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-display);font-size:1.2rem;flex-shrink:0">4</div>
+            <div><h4>Offer Letter &amp; Acceptance</h4><p>Successful candidates receive an offer letter. Parents must confirm acceptance and pay the acceptance fee within the stipulated period.</p></div>
+          </div>
+          <div style="display:flex;gap:1.25rem;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-display);font-size:1.2rem;flex-shrink:0">5</div>
+            <div><h4>Resumption &amp; Enrolment</h4><p>Newly admitted students resume on the date specified in their offer letter. All school kit and documentation must be completed before resumption.</p></div>
+          </div>
+        </div>
+
+        <div style="margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+          <a href="apply.html" class="btn btn--gold">Apply Online Now</a>
+          <a href="exam.html" class="btn btn--outline">Exam Dates</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="info-box">
+          <h4>📋 Documents Required</h4>
+          <ul>
+            <li>Completed application form</li>
+            <li>Birth certificate (original + photocopy)</li>
+            <li>Passport photographs (4 copies)</li>
+            <li>Most recent school report/result</li>
+            <li>Transfer certificate (if applicable)</li>
+            <li>Immunisation card (for Crèche/Nursery)</li>
+            <li>Medical fitness report</li>
+            <li>Parent/guardian valid ID</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="background:var(--navy);border-color:rgba(201,168,76,0.3);margin-top:1.5rem">
+          <h4 style="color:var(--gold-light)">💰 Fee Information</h4>
+          <ul style="color:rgba(255,255,255,0.8)">
+            <li>Application form fee: Available on request</li>
+            <li>Acceptance fee: Available on request</li>
+            <li>School fees: Payable termly</li>
+            <li>For full fee schedule, contact the school directly</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top:1.5rem">
+          <h4>📅 Upcoming Entrance Exam Dates</h4>
+          <ul id="exam-dates-list">
+            <li>Loading...</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:1.5rem;background:var(--white);border-radius:var(--radius-lg);padding:1.75rem;border:1px solid var(--border);box-shadow:var(--shadow-sm)">
+          <h4 style="margin-bottom:1rem">🎓 Age Requirements</h4>
+          <table class="data-table" style="margin-top:0">
+            <thead><tr><th>Section</th><th>Age Range</th></tr></thead>
+            <tbody>
+              <tr><td>Crèche</td><td>3 months – 23 months</td></tr>
+              <tr><td>Nursery 1 &amp; 2</td><td>2 – 4 years</td></tr>
+              <tr><td>KG 1 &amp; 2</td><td>4 – 6 years</td></tr>
+              <tr><td>Primary 1–6</td><td>6 – 12 years</td></tr>
+              <tr><td>JSS 1–3</td><td>12 – 15 years</td></tr>
+              <tr><td>SS 1–3</td><td>15 – 18 years</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="join-section">
+  <div class="container">
+    <h2>Ready to Apply?</h2>
+    <p>Secure your child's place at Gran Hermano Academy today.</p>
+    <a href="apply.html" class="btn btn--gold">Apply for Admission</a>
+  </div>
+</section>
+
+<footer id="main-footer"></footer>
+<button class="back-top" id="back-top">↑</button>
+<script src="../js/data.js"></script><script src="../js/layout.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('exam-dates-list');
+  if (el) el.innerHTML = `<li>${GHA_DATA.admission.examDates}</li>`;
+});
+</script>
+</body>
+</html>

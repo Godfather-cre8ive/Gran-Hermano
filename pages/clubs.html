@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Clubs — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+<div class="topbar" id="topbar"></div>
+<nav id="main-navbar"></nav>
+<section class="page-hero">
+  <div class="container">
+    <h1>School Clubs</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>›</span><span>School Clubs</span></div>
+  </div>
+</section>
+<section class="page-content">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem">
+      <span class="section-label">Extracurricular</span>
+      <h2 class="section-title">School Clubs &amp; Societies</h2>
+      <div class="gold-line gold-line--center"></div>
+      <p style="max-width:640px;margin:0 auto">We believe that learning extends beyond the classroom. Our clubs and societies help students discover their passions and develop lifelong skills.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem">
+      ${[
+        ['🎤','Debate Club','Sharpens public speaking, critical thinking and argumentation skills through regular debates and competitions.'],
+        ['🎨','Art &amp; Craft Club','Nurtures creativity through drawing, painting, sculpting and various forms of visual expression.'],
+        ['💻','ICT &amp; Coding Club','Teaches programming, web development, robotics and digital design from an early age.'],
+        ['🎵','Music &amp; Drama Club','Develops musical talent and theatrical skills through rehearsals, performances and productions.'],
+        ['📚','Press Club','Student-run newspaper and media team that covers school news, events and stories.'],
+        ['🌱','Environmental Club','Promotes sustainability, gardening, recycling and environmental stewardship on campus.'],
+        ['⚽','Sports Club','Competitive and recreational sports including football, basketball, athletics and more.'],
+        ['🔬','Science Club','Hands-on experiments, science fairs and competitions that bring science to life.'],
+      ].map(([ico,name,desc]) => `<div style="background:var(--white);border-radius:var(--radius-lg);padding:1.75rem;border:1px solid var(--border);box-shadow:var(--shadow-sm);text-align:center;transition:all var(--transition)" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow-sm)'"><div style="font-size:2.5rem;margin-bottom:0.75rem">${ico}</div><h4 style="margin-bottom:0.5rem">${name}</h4><p style="font-size:0.875rem">${desc}</p></div>`).join('')}
+    </div>
+  </div>
+</section>
+<section class="join-section">
+  <div class="container">
+    <h2>Would You Like to Know More?</h2>
+    <p>Contact us today or apply for admission online.</p>
+    <a href="apply.html" class="btn btn--gold">Apply for Admission</a>
+  </div>
+</section>
+<footer id="main-footer"></footer>
+<button class="back-top" id="back-top">↑</button>
+<script src="../js/data.js"></script><script src="../js/layout.js"></script>
+</body>
+</html>

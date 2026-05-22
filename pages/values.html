@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Values &amp; Vision — Gran Hermano Academy</title>
+  <link rel="icon" href="https://www.granhermano.sch.ng/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+<div class="topbar" id="topbar"></div>
+<nav id="main-navbar"></nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Our Values &amp; Vision</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>›</span><a href="about.html">About GHA</a><span>›</span><span>Values &amp; Vision</span></div>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <span class="section-label">Our Vision</span>
+        <h2 class="section-title">Where We Are Going</h2>
+        <div class="gold-line"></div>
+        <p id="vision-txt" style="font-size:1.1rem;font-style:italic;line-height:1.9;color:var(--navy);margin-bottom:2rem"></p>
+
+        <span class="section-label">Our Mission</span>
+        <h3 style="font-size:1.6rem;margin-bottom:0.75rem">How We Get There</h3>
+        <div class="gold-line"></div>
+        <p id="mission-txt" style="line-height:1.85;margin-bottom:2rem"></p>
+
+        <a href="apply.html" class="btn btn--gold" style="margin-right:1rem">Apply Now</a>
+        <a href="../index.html#contact" class="btn btn--outline">Contact Us</a>
+      </div>
+      <div>
+        <img id="values-img" src="https://www.granhermano.sch.ng/img/nm289.jpg" alt="GHA Values" style="width:100%;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);margin-bottom:2rem">
+      </div>
+    </div>
+
+    <div style="margin-top:4rem;text-align:center">
+      <span class="section-label">Core Values</span>
+      <h2 class="section-title">What We Stand For</h2>
+      <div class="gold-line gold-line--center"></div>
+    </div>
+    <div id="values-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:2rem"></div>
+  </div>
+</section>
+
+<section class="join-section">
+  <div class="container">
+    <h2>Join the GHA Family</h2>
+    <p>Experience world-class education rooted in excellence, respect, responsibility and integrity.</p>
+    <a href="apply.html" class="btn btn--gold">Apply for Admission</a>
+  </div>
+</section>
+
+<footer id="main-footer"></footer>
+<button class="back-top" id="back-top">↑</button>
+<script src="../js/data.js"></script><script src="../js/layout.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const v = GHA_DATA.vision;
+  document.getElementById('vision-txt').textContent = v.text;
+  document.getElementById('mission-txt').textContent = v.mission;
+  document.getElementById('values-img').src = v.image;
+  const icons = ['⭐','🤝','🏆','🛡️','💡','❤️'];
+  const colors = ['#fff8e6','#e6f0ff','#e6fff0','#ffe6e6','#f0e6ff','#e6fff8'];
+  document.getElementById('values-grid').innerHTML = v.coreValues.map((val, i) => `
+    <div style="background:${colors[i%colors.length]};border-radius:var(--radius-lg);padding:2rem;border:1px solid rgba(201,168,76,0.2);border-left:4px solid var(--gold)">
+      <div style="font-size:2rem;margin-bottom:0.75rem">${icons[i]||'✦'}</div>
+      <h4 style="font-size:1.25rem;margin-bottom:0.5rem">${val.name}</h4>
+      <p style="font-size:0.9rem;line-height:1.75">${val.desc}</p>
+    </div>`).join('');
+});
+</script>
+</body>
+</html>
