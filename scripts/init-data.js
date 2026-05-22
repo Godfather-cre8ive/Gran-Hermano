@@ -1,0 +1,147 @@
+/**
+ * GHA — Init Script
+ * Seeds the server-side data/site-data.json from the JS data store.
+ * Run once after deployment: node scripts/init-data.js
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+const OUTPUT = path.join(__dirname, '..', 'data', 'site-data.json');
+
+const initialData = {
+  site: {
+    name: "Gran Hermano Academy",
+    tagline: "Cambridge Certified Excellence in Education",
+    phone1: "+2349060940593",
+    phone2: "+2348096711999",
+    phone3: "+2348037184248",
+    phone4: "+2348038931210",
+    phone5: "+23433337979",
+    email: "info@granhermano.sch.ng",
+    address: "No 9, Cepha Avenue, Agu-Awka, Behind Government House, 420110 Awka, Nigeria",
+    admissionOpen: true,
+    admissionBanner: "Admission is Ongoing — Secure Your Child's Future Today!",
+    logo: "https://www.granhermano.sch.ng/img/logo.png",
+    facebook: "https://web.facebook.com/pg/granhermanoacademy",
+    instagram: "https://web.instagram.com/granhermanoacademy",
+    twitter: "#",
+    youtube: "#"
+  },
+  hero: {
+    slides: [
+      { image: "https://www.granhermano.sch.ng/img/bg1.jpg", headline: "Welcome to Gran Hermano Academy", sub: "Shaping Future Leaders Since Foundation" },
+      { image: "https://www.granhermano.sch.ng/img/bg49.jpg", headline: "Cambridge Certified", sub: "Internationally Recognised Qualifications" },
+      { image: "https://www.granhermano.sch.ng/img/bg2.jpg", headline: "Conducive Learning Environment", sub: "Where Every Child Thrives" },
+      { image: "https://www.granhermano.sch.ng/img/bg3.jpg", headline: "Your Child's Safety is Guaranteed", sub: "A Secure Home Away from Home" },
+      { image: "https://www.granhermano.sch.ng/img/bg4.jpg", headline: "Quality Education Excellence", sub: "Academic Records That Speak for Themselves" },
+      { image: "https://www.granhermano.sch.ng/img/bg5.jpg", headline: "Better Education for a Better World", sub: "Building Character, Intellect and Spirit" },
+      { image: "https://www.granhermano.sch.ng/img/bg7.jpg", headline: "We Equip Our Children With Skills", sub: "Practical Learning for Real-World Success" }
+    ]
+  },
+  admission: {
+    headline: "Admissions Are Open",
+    sub: "Enroll your child today and give them the future they deserve.",
+    examDates: "Entrance Exam Dates: 24th May 2025 · 14th June 2025",
+    countdownTarget: "2025-07-31T00:00:00",
+    ctaText: "Apply for Admission",
+    ctaLink: "#contact"
+  },
+  jamb: {
+    year: "2025",
+    title: "JAMB UTME Top Scorers",
+    scorers: [
+      { name: "Basil-Dim Chukwudumebi", year: "Year 12", image: "https://www.granhermano.sch.ng/img/basil.jpg", scores: [{ subj: "ENG", val: 71 }, { subj: "BIO", val: 89 }, { subj: "PHY", val: 86 }, { subj: "CHEM", val: 83 }], total: 329 },
+      { name: "Ejiofor Praise", year: "Year 12", image: "https://www.granhermano.sch.ng/img/praise2.jpg", scores: [{ subj: "ENG", val: 69 }, { subj: "BIO", val: 85 }, { subj: "PHY", val: 84 }, { subj: "CHEM", val: 86 }], total: 324 },
+      { name: "Chudi Sophia", year: "Year 12", image: "https://www.granhermano.sch.ng/img/sophia.jpg", scores: [{ subj: "ENG", val: 67 }, { subj: "BIO", val: 83 }, { subj: "PHY", val: 80 }, { subj: "CHEM", val: 90 }], total: 320 },
+      { name: "Osemeka Angel", year: "Year 12", image: "https://www.granhermano.sch.ng/img/osemeka.jpg", scores: [{ subj: "ENG", val: 69 }, { subj: "BIO", val: 88 }, { subj: "PHY", val: 72 }, { subj: "CHEM", val: 83 }], total: 312 },
+      { name: "Ufoaroh Chinecherem", year: "Year 12", image: "https://www.granhermano.sch.ng/img/neche.jpg", scores: [{ subj: "ENG", val: 73 }, { subj: "MAT", val: 86 }, { subj: "PHY", val: 67 }, { subj: "CHEM", val: 81 }], total: 307 },
+      { name: "Shittu Olukayode", year: "Year 12", image: "https://www.granhermano.sch.ng/img/shittu.jpg", scores: [{ subj: "ENG", val: 68 }, { subj: "BIO", val: 74 }, { subj: "PHY", val: 65 }, { subj: "CHEM", val: 92 }], total: 299 }
+    ]
+  },
+  sections: {
+    creche: { title: "Crèche Section", image: "https://www.granhermano.sch.ng/img/nm23.jpg", description: "Our crèche is beautifully designed and equipped to cater for the needs of infants and toddlers between the ages of three to twenty-three months.", cta: "Enroll Your Baby Now" },
+    nursery: { title: "Nursery Section", image: "https://www.granhermano.sch.ng/img/nm24.jpg", description: "We pride ourselves in being able to provide personalised learning experience organised to suit the development of each child.", cta: "Enroll Your Child Now" },
+    primary: { title: "Primary Section", image: "https://www.granhermano.sch.ng/img/nm255.jpg", description: "Our curriculum enables children to excel in Mathematics, English Language, Arts, Drama, Music and Sports.", cta: "Enroll Your Child Now" },
+    secondary: { title: "Secondary Section", image: "https://www.granhermano.sch.ng/img/nm266.jpg", description: "Gran Hermano Academy Junior and Secondary school is best known for its exceptionally caring atmosphere.", cta: "Enroll Your Child Now" }
+  },
+  about: {
+    image: "https://www.granhermano.sch.ng/img/ubg2.jpg",
+    title: "Welcome To Gran Hermano Academy",
+    body: "Gran Hermano Academy is a co-educational boarding institution, consisting of nursery, primary and senior secondary school children between the ages of 2–16 years. It was founded to provide a balanced, comprehensive educational curriculum for the full development of children intellectually, spiritually and socially.",
+    stats: [
+      { value: "20+", label: "Years of Excellence" },
+      { value: "2000+", label: "Graduates" },
+      { value: "100+", label: "Expert Staff" },
+      { value: "Cambridge", label: "Certified" }
+    ]
+  },
+  whyChoose: {
+    title: "Why Choose Gran Hermano Academy",
+    subtitle: "At GHA, our goal is to model and equip great minds and maximise their potential to face the ever-dynamic world.",
+    items: [
+      { title: "Learning by Discovery", image: "https://www.granhermano.sch.ng/img/r1.jpg", description: "At GHA, students learn through making discoveries and practical involvement that enhances critical thinking and independent learning." },
+      { title: "Intellectual Competence", image: "https://www.granhermano.sch.ng/img/nm303.jpg", description: "With a student-centred approach and state-of-the-art facilities, GHA is an academic fortress where students reach their highest potential." },
+      { title: "Skilled Teachers", image: "https://www.granhermano.sch.ng/img/r8.jpg", description: "Every staff member comes with an excellent track record, challenging our students to be the very best in every endeavour." },
+      { title: "Secured & Safe Environment", image: "https://www.granhermano.sch.ng/img/r4.jpg", description: "Our campus is fully secured with round-the-clock supervision, CCTV coverage and professional security personnel." },
+      { title: "Conducive Learning & Library", image: "https://www.granhermano.sch.ng/img/r5.jpg", description: "Our library and learning spaces are designed for focused, inspired study and independent research." },
+      { title: "Standard Sports Centres", image: "https://www.granhermano.sch.ng/img/r6.jpg", description: "Our sports facilities nurture physical fitness, teamwork, discipline, and a healthy competitive spirit." },
+      { title: "Air-Conditioned Classrooms", image: "https://www.granhermano.sch.ng/img/nc1.jpg", description: "Every classroom is air-conditioned and equipped with modern teaching aids, ensuring students remain comfortable and focused." },
+      { title: "Modern School Buses", image: "https://www.granhermano.sch.ng/img/r7.jpg", description: "Our fleet of modern, air-conditioned school buses ensures safe and comfortable transportation every school day." }
+    ]
+  },
+  facilities: [
+    { title: "Library", image: "https://www.granhermano.sch.ng/img/f1.jpg", description: "Our school library is a quiet and well-organised learning space stocked with textbooks, reference materials, storybooks and digital resources." },
+    { title: "Playground", image: "https://www.granhermano.sch.ng/img/f2.jpg", description: "Our playground is a safe and lively environment where students relax, play, and develop physical fitness and teamwork." },
+    { title: "ICT Laboratory", image: "https://www.granhermano.sch.ng/img/f3.jpg", description: "Our ICT Lab is a digital learning hub designed to prepare students for the digital economy." },
+    { title: "Modern Classrooms", image: "https://www.granhermano.sch.ng/img/f4.jpg", description: "Our classrooms provide a comfortable, well-organised learning environment with quality furniture and learning materials." },
+    { title: "Biology Laboratory", image: "https://www.granhermano.sch.ng/img/f5.jpg", description: "Our biology laboratory is well equipped with modern facilities to facilitate the practical aspect of the subject." },
+    { title: "Physics Laboratory", image: "https://www.granhermano.sch.ng/img/f7.jpg", description: "Our Physics laboratory has a very conducive atmosphere for performing experiments with maximum engagement." },
+    { title: "Chemistry Laboratory", image: "https://www.granhermano.sch.ng/img/f6.jpg", description: "Cambridge-certified with modern equipment including fume cupboard, water distillation chamber, and Kipp's apparatus." }
+  ],
+  anthem: {
+    verse1: "All hail, Gran Hermano\nMy school, my pride\nMy alma mater\nFor you will blossom in wisdom\nTo achieve excellence\nSpringing leadership\nGHA, G.H.A, G.H.A\nWe are great\nWe are great",
+    verse2: "Arise, Gran Hermano\nShine forth with light\nThat never goes dim\nShining to the hills and valleys\nMolding, restructuring\nFuture generation\nG.H.A, G.H.A., G.H.A.\nWe are great\nWe are great"
+  },
+  vision: {
+    text: "To be a top-class school for the pursuit of excellence in knowledge as well as character and service to humanity.",
+    mission: "To provide a conducive teaching environment, learning and character based on the fear of God and hard work. To develop a child completely — body, mind and soul — so as to attain excellence in all ramifications of life.",
+    coreValues: [
+      { name: "Excellence", desc: "Excellent teaching is our passion. Teachers are highly committed to their work and assist pupils and students to achieve their potentials." },
+      { name: "Respect", desc: "We care for others and treat them with courtesy. Mutual respect is the foundation of our community." },
+      { name: "Responsibility", desc: "We nurture our pupils and students to be independent and great leaders of tomorrow." },
+      { name: "Integrity", desc: "We are strongly committed and sincere in all our dealings with pupils, students and parents." }
+    ],
+    image: "https://www.granhermano.sch.ng/img/nm289.jpg"
+  },
+  news: [
+    {
+      id: 1,
+      date: "1st December, 2025",
+      title: "GHA Annual Thanksgiving Service",
+      excerpt: "We cordially invite all parents and guardians to the 12th Annual Thanksgiving Service of our dear school.",
+      content: "Dear Parents/Guardians, We wish to cordially invite you to the 12th Annual Thanksgiving service of our dear school. Date: Sunday, 7th December, 2025. Time: 9:30a.m. prompt. Venue: St. Thomas Aquinas Catholic Church, behind old Govt House, Agu-Awka.",
+      image: "https://www.granhermano.sch.ng/img/bg10.jpg",
+      author: "GHA ICT",
+      category: "Events"
+    },
+    {
+      id: 2,
+      date: "1st December, 2025",
+      title: "First Term Examination Ongoing",
+      excerpt: "First Term Examination for the 2025/2026 Academic Session is currently ongoing.",
+      content: "First Term Examination for 2025/2026 Academic Session is ongoing. Students are expected to arrive early and come with all necessary exam materials.",
+      image: "https://www.granhermano.sch.ng/img/bg10.jpg",
+      author: "GHA ICT",
+      category: "Academics"
+    }
+  ]
+};
+
+fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
+fs.writeFileSync(OUTPUT, JSON.stringify(initialData, null, 2));
+fs.writeFileSync(path.join(__dirname, '..', 'data', 'applications.json'), JSON.stringify([], null, 2));
+fs.writeFileSync(path.join(__dirname, '..', 'data', 'enquiries.json'), JSON.stringify([], null, 2));
+
+console.log('✅ Data initialised successfully at:', OUTPUT);
+console.log('✅ applications.json and enquiries.json created.');
